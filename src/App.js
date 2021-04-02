@@ -1,4 +1,4 @@
-import React, {useState, useRef, Component} from 'react';
+import React, {useState, useRef, Component, createRef} from 'react';
 import './App.css';
 
 /*
@@ -15,6 +15,7 @@ create controlled and uncontrolled select component
 create controlled and uncontrolled checkbox
 create controlled and uncontrolled radio
 */
+
 const URL = 'https://jsonplaceholder.typicode.com';
 const allEndpoints = ['posts', 'comments', 'albums', 'photos', 'todos', 'users'];
 
@@ -134,7 +135,7 @@ const allEndpoints = ['posts', 'comments', 'albums', 'photos', 'todos', 'users']
 } */
 
 // 1 controlled class
-class App extends Component {
+/*class App extends Component {
     state = {
         endpoint: '',
         id: '',
@@ -183,7 +184,7 @@ class App extends Component {
                 </div>
                 <hr />
                 <div className={'result'}>
-                    {this.state.item && JSON.stringify(this.state.item)}
+                    {this.state.item && JSON.stringify(this.state.item, null, 2)}
                 </div>
                 <hr />
                 <div className={'result'}>
@@ -192,6 +193,63 @@ class App extends Component {
             </div>
         );
     };
-}
+} */
+
+// 1 uncontrolled class
+/*class App extends Component {
+    endpoint = createRef();
+    id = createRef();
+
+    state = {
+        item:null,
+        arrays: []
+    }
+
+    onSubmit = (e) => {
+        e.preventDefault();
+
+        if (!allEndpoints.includes(this.endpoint.current.value.trim().toLowerCase())) {
+            alert ('Error in first input');
+        }
+
+        if ((!Number(this.id.current.value) || Number(this.id.current.value) < 1 || Number(this.id.current.value) > 100) && this.id.current.value !== '') {
+            return alert ('Error in second input');
+        }
+
+        this.fetchData();
+    };
+
+    fetchData = async () => {
+        const response = await fetch(`${URL}/${this.endpoint.current.value.trim().toLowerCase()}/${this.id.current.value}`);
+        const json = await response.json();
+
+        if (this.id.current.value) {
+            this.setState({item: json, arrays: []});
+            return;
+        }
+            this.setState({arrays: json, item: null});
+    };
+
+    render() {
+        return (
+            <div className="App">
+                <form className={'fetch'} onSubmit={this.onSubmit}>
+                    <h2>Fetch</h2>
+                    <input ref={this.endpoint} type={'text'} name={'endpoint'} placeholder={'posts/comments/albums/photos/todos/users'} />
+                    <input ref={this.id} type={'text'} name={'id'} placeholder={'1-100'} />
+                    <button type={'submit'}>fetch data</button>
+                </form>
+                <hr />
+                <div className={'result'}>
+                    {this.state.item && JSON.stringify(this.state.item, null, 2)}
+                </div>
+                <hr />
+                <div className={'result'}>
+                    {this.state.arrays.map(value => <p key={value.id}>{value.id} - {value.title ?? value.name}</p>)}
+                </div>
+            </div>
+        );
+    };
+} */
 
 export default App;
