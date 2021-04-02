@@ -1,12 +1,12 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, Component} from 'react';
 import './App.css';
 
 /*
 !!створти 2 інтупи і кнопку
 !!перший відповідає за ендпоінт джсон плейсхолдера (перша частина енпоніту) другий- за айдішнік якщо другого ендпоінту нема- тягнемо весь список
-!!потрібно зробити валідацію на перший інпут- чи ендпоінт існуючий
-!!на другий-чи це число і чи воно в рамках 1-100
-!!зробити версію на функціональній компоненті контрольовану і не контрольовану
+потрібно зробити валідацію на перший інпут- чи ендпоінт існуючий
+на другий-чи це число і чи воно в рамках 1-100
+зробити версію на функціональній компоненті контрольовану і не контрольовану
 якщо є час- на класовій компоненті теж таке саме написати
 
 друга частина
@@ -50,16 +50,17 @@ const allEndpoints = ['posts', 'comments', 'albums', 'photos', 'todos', 'users']
             setItem(null);
     };
 
+    const updateUserData = (e) => {
+        const {target: {name, value}} = e;
+        name === 'endpoint' ? setEndpoint(value.trim().toLowerCase()) : setId(value);
+    };
+
   return (
     <div className="App">
         <div className={'fetch'}>
             <h2>Fetch</h2>
-            <input value={endpoint} type={'text'} name={'endpoint'}
-                   onChange={({target: {value}}) => setEndpoint(value.trim().toLowerCase())}
-                   placeholder={'posts/comments/albums/photos/todos/users'} />
-            <input value={id} type={'text'} name={'id'}
-                   onChange={({target: {value}}) => setId(value)}
-                   placeholder={'1-100'} />
+            <input value={endpoint} type={'text'} name={'endpoint'} onChange={updateUserData} placeholder={'posts/comments/albums/photos/todos/users'} />
+            <input value={id} type={'text'} name={'id'} onChange={updateUserData} placeholder={'1-100'} />
             <button onClick={onSubmit}>fetch data</button>
         </div>
         <hr />
@@ -131,5 +132,66 @@ const allEndpoints = ['posts', 'comments', 'albums', 'photos', 'todos', 'users']
         </div>
     );
 } */
+
+// 1 controlled class
+class App extends Component {
+    state = {
+        endpoint: '',
+        id: '',
+        item: null,
+        arrays: []
+    };
+
+    updateUserData = (e) => {
+        const {target: {name, value}} = e;
+        name === 'endpoint' ? this.setState({endpoint: value.trim().toLowerCase()}) : this.setState({id: value});
+    };
+
+    onSubmit = () => {
+        if (!allEndpoints.includes(this.state.endpoint)) {
+            alert ('Error in first input');
+        }
+
+        if ((!Number(this.state.id) || Number(this.state.id) < 1 || Number(this.state.id) > 100) && this.state.id !== '') {
+            return alert ('Error in second input');
+        }
+
+        this.fetchData();
+    }
+
+    fetchData = async () => {
+      const response = await fetch(`${URL}/${this.state.endpoint}/${this.state.id}`);
+      const json = await response.json();
+
+      if (this.state.id) {
+          this.setState({item: json, arrays: []});
+          return;
+      }
+        this.setState({item: null, arrays: json});
+    };
+
+    render() {
+        return (
+            <div className="App">
+                <div className={'fetch'}>
+                    <h2>Fetch</h2>
+                    <input value={this.state.endpoint} type={'text'} name={'endpoint'} onChange={this.updateUserData}
+                           placeholder={'posts/comments/albums/photos/todos/users'} />
+                    <input value={this.state.id} type={'text'} name={'id'} onChange={this.updateUserData}
+                           placeholder={'1-100'} />
+                    <button onClick={this.onSubmit}>fetch data</button>
+                </div>
+                <hr />
+                <div className={'result'}>
+                    {this.state.item && JSON.stringify(this.state.item)}
+                </div>
+                <hr />
+                <div className={'result'}>
+                    {this.state.arrays.map(value => <p key={value.id}>{value.id} - {value.title ?? value.name}</p>)}
+                </div>
+            </div>
+        );
+    };
+}
 
 export default App;
