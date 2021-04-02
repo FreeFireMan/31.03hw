@@ -272,7 +272,7 @@ const allEndpoints = ['posts', 'comments', 'albums', 'photos', 'todos', 'users']
 
     return (
         <div className="secondTask">
-            <h2>Inputs</h2>
+            <h3>Inputs</h3>
             <select name={'select'} onChange={updateUserData} >
                 <option>Select First</option>
                 <option>Select Second</option>
@@ -287,6 +287,73 @@ const allEndpoints = ['posts', 'comments', 'albums', 'photos', 'todos', 'users']
             <button onClick={onSend}>send</button>
         </div>
     );
+} */
+
+// 2 uncontrolled function
+/*function App() {
+    const onSend = (e) => {
+        e.preventDefault();
+    };
+
+    return (
+        <div className="secondTask">
+            <form onSubmit={onSend}>
+                <h3>Inputs</h3>
+                <select name={'select'} >
+                    <option>Select First</option>
+                    <option>Select Second</option>
+                </select>
+                <br />
+                <input type={'checkbox'} name={'checkbox'}/> <label>Checkbox First</label>
+                <input type={'checkbox'} name={'checkbox'}/> <label>Checkbox Second</label>
+                <br />
+                <input type={'radio'} name={'radio'}/> <label>Radio First</label>
+                <input type={'radio'} name={'radio'}/> <label>Radio Second</label>
+                <br />
+                <button type={'submit'}>send</button>
+            </form>
+        </div>
+    );
+} */
+
+// 2 controlled class
+/*class App extends Component {
+    state = {
+        select: 'Select First',
+        checkbox: [],
+        radio: null
+    };
+
+    updateUserData = (e) => {
+        const {target: {name, value}} = e;
+
+        this.setState({...this.state, [name]: value});
+        if (name === 'checkbox') this.setState({...this.state, checkbox: [...this.state.checkbox, value]});
+    };
+
+    onSend = () => {
+        alert (JSON.stringify(this.state, null, 2));
+    };
+
+    render() {
+        return (
+            <div className="secondTask">
+                <h3>Inputs</h3>
+                <select name={'select'} onChange={this.updateUserData}>
+                    <option>Select First</option>
+                    <option>Select Second</option>
+                </select>
+                <br />
+                <input value={'checkbox first'} onChange={this.updateUserData} type={'checkbox'} name={'checkbox'}/> <label>Checkbox First</label>
+                <input value={'checkbox second'} onChange={this.updateUserData} type={'checkbox'} name={'checkbox'}/> <label>Checkbox Second</label>
+                <br />
+                <input value={'radio first'} onChange={this.updateUserData} type={'radio'} name={'radio'}/> <label>Radio First</label>
+                <input value={'radio second'} onChange={this.updateUserData} type={'radio'} name={'radio'}/> <label>Radio Second</label>
+                <br />
+                <button onClick={this.onSend}>send</button>
+            </div>
+        );
+    };
 } */
 
 export default App;
