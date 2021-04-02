@@ -317,7 +317,7 @@ const allEndpoints = ['posts', 'comments', 'albums', 'photos', 'todos', 'users']
 } */
 
 // 2 controlled class
-/*class App extends Component {
+class App extends Component {
     state = {
         select: 'Select First',
         checkbox: [],
@@ -354,6 +354,6 @@ const allEndpoints = ['posts', 'comments', 'albums', 'photos', 'todos', 'users']
             </div>
         );
     };
-} */
+} 
 
 export default App;
