@@ -12,3 +12,15 @@
 .result {
     text-align: center;
 }
+
+.secondTask {
+    margin: 0 auto;
+    width: 300px;
+    border: 1px solid;
+}
+.secondTask > h2 {
+    text-align: center;
+}
+.secondTask > input, button {
+    margin: 5px;
+}

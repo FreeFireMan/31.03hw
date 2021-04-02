@@ -252,4 +252,41 @@ const allEndpoints = ['posts', 'comments', 'albums', 'photos', 'todos', 'users']
     };
 } */
 
+// 2 controlled function
+/*function App() {
+   const [state, setState] = useState({
+       select: 'Select First',
+       checkbox: [],
+       radio: null
+   });
+
+   const updateUserData = (e) => {
+       const {target: {name, value}} = e;
+       setState({...state, [name]: value});
+       if (name === 'checkbox') setState({...state, checkbox: [...state.checkbox, value]});
+   };
+
+   const onSend = (e) => {
+       alert (JSON.stringify(state, null, 2));
+   };
+
+    return (
+        <div className="secondTask">
+            <h2>Inputs</h2>
+            <select name={'select'} onChange={updateUserData} >
+                <option>Select First</option>
+                <option>Select Second</option>
+            </select>
+            <br />
+            <input value={'checkbox first'} onChange={updateUserData} type={'checkbox'} name={'checkbox'}/> <label>Checkbox First</label>
+            <input value={'checkbox second'} onChange={updateUserData} type={'checkbox'} name={'checkbox'}/> <label>Checkbox Second</label>
+            <br />
+            <input value={'radio first'} onChange={updateUserData} type={'radio'} name={'radio'}/> <label>Radio First</label>
+            <input value={'radio second'} onChange={updateUserData} type={'radio'} name={'radio'}/> <label>Radio Second</label>
+            <br />
+            <button onClick={onSend}>send</button>
+        </div>
+    );
+} */
+
 export default App;
